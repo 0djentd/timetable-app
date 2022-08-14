@@ -12,8 +12,8 @@
         ></v-text-field>
       </v-card-title>
       <v-data-table
-        :dense="tasks.length >= 5"
-        multi-sort
+        :dense="showDense"
+        :multi-sort="multi_sort"
         :loading="!tasks"
         :search="search"
         :headers="headers"
@@ -21,23 +21,41 @@
         :items-per-page="50"
       >
       </v-data-table>
+      <v-switch v-model="multi_sort" label="multi-sort"> </v-switch>
+      <v-switch v-model="dense" label="dense"> </v-switch>
+      <v-switch v-model="auto_dense" label="auto-dense"> </v-switch>
     </v-card>
   </div>
 </template>
 <script>
-import { example_data } from "@/data.js";
 export default {
   data() {
     return {
       search: "",
+      multi_sort: true,
+      dense: true,
+      auto_dense: true,
       headers: [
         { text: "Title", value: "title" },
         { text: "Description", value: "description" },
         { text: "Start", value: "start" },
         { text: "Priority", value: "priority" },
       ],
-      tasks: example_data,
     };
+  },
+  props: ["tasks"],
+  computed: {
+    showDense() {
+      if (this.auto_dense) {
+        if (this.tasks.length > 5) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return this.dense;
+      }
+    },
   },
 };
 </script>
