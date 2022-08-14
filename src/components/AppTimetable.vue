@@ -1,7 +1,26 @@
 <template>
   <div>
-    <v-data-table :headers="headers" :items="tasks" :items-per-page="50">
-    </v-data-table>
+    <v-card>
+      <v-card-title>
+        Timetable
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search tasks"
+          class="mr-4"
+        ></v-text-field>
+      </v-card-title>
+      <v-data-table
+        dense
+        multi-sort
+        :search="search"
+        :headers="headers"
+        :items="tasks"
+        :items-per-page="50"
+      >
+      </v-data-table>
+    </v-card>
   </div>
 </template>
 <script>
@@ -9,15 +28,11 @@ import { example_data } from "@/data.js";
 export default {
   data() {
     return {
+      search: "",
       headers: [
-        {
-          text: "Task title",
-          align: "start",
-          value: "title",
-        },
+        { text: "Title", value: "title" },
         { text: "Description", value: "description" },
         { text: "Start", value: "start" },
-        { text: "End", value: "end" },
         { text: "Priority", value: "priority" },
       ],
       tasks: example_data,
