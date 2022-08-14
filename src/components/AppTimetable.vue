@@ -5,6 +5,7 @@
   </div>
 </template>
 <script>
+import { example_data } from "@/data.js";
 export default {
   data() {
     return {
@@ -19,7 +20,7 @@ export default {
         { text: "End", value: "end" },
         { text: "Priority", value: "priority" },
       ],
-      tasks: [],
+      tasks: example_data,
     };
   },
 };
