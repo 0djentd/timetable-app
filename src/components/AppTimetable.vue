@@ -12,8 +12,9 @@
         ></v-text-field>
       </v-card-title>
       <v-data-table
-        dense
+        :dense="tasks.length >= 5"
         multi-sort
+        :loading="!tasks"
         :search="search"
         :headers="headers"
         :items="tasks"
