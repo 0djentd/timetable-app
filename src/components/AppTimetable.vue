@@ -39,16 +39,13 @@
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          v-model="editedItem.start"
-                          label="Start"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
+                        <v-slider
                           v-model="editedItem.priority"
                           label="Priority"
-                        ></v-text-field>
+                          thumb-label
+                          min="0"
+                          max="10"
+                        ></v-slider>
                       </v-col>
                     </v-row>
                     <v-row>
@@ -57,6 +54,10 @@
                         label="Description"
                       >
                       </v-textarea>
+                      <v-time-picker
+                        full-width
+                        v-model="editedItem.start"
+                      ></v-time-picker>
                     </v-row>
                   </v-container>
                 </v-card-text>
