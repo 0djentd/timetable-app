@@ -24,6 +24,7 @@
       <v-switch v-model="multi_sort" label="multi-sort"> </v-switch>
       <v-switch v-model="dense" label="dense"> </v-switch>
       <v-switch v-model="auto_dense" label="auto-dense"> </v-switch>
+      <v-btn @click="saveToLocalStorage()">Save</v-btn>
     </v-card>
   </div>
 </template>
@@ -41,9 +42,9 @@ export default {
         { text: "Start", value: "start" },
         { text: "Priority", value: "priority" },
       ],
+      tasks: [],
     };
   },
-  props: ["tasks"],
   computed: {
     showDense() {
       if (this.auto_dense) {
@@ -56,6 +57,26 @@ export default {
         return this.dense;
       }
     },
+  },
+  methods: {
+    loadFromLocalStorage: function () {
+      const localStorageStr = "timetable-app-tasks";
+      const tasksJson = localStorage.getItem(localStorageStr, '{"tasks": []}');
+      const tasks = JSON.parse(tasksJson).tasks;
+      if (tasks) {
+        this.tasks = tasks;
+      } else {
+        this.tasks = [];
+      }
+    },
+    saveToLocalStorage: function () {
+      const localStorageStr = "timetable-app-tasks";
+      const tasksJson = JSON.stringify({ tasks: this.tasks });
+      localStorage.setItem(localStorageStr, tasksJson);
+    },
+  },
+  mounted() {
+    this.loadFromLocalStorage();
   },
 };
 </script>
