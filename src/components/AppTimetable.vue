@@ -116,6 +116,7 @@
         <v-switch v-model="multi_sort" label="multi-sort"> </v-switch>
         <v-switch v-model="dense" label="dense"> </v-switch>
         <v-switch v-model="auto_dense" label="auto-dense"> </v-switch>
+        <v-switch v-model="filter_time" label="filter-time"> </v-switch>
       </v-sheet>
     </v-col>
   </v-row>
@@ -128,10 +129,24 @@ export default {
       multi_sort: true,
       dense: true,
       auto_dense: true,
+      filter_time: false,
       headers: [
         { text: "Title", value: "title" },
         { text: "Description", value: "description" },
-        { text: "Start", value: "start" },
+        {
+          text: "Start",
+          value: "start",
+          filter: (val) => {
+            if (!this.filter_time) {
+              return true;
+            }
+            if (val >= this.currentTime) {
+              return true;
+            } else {
+              return false;
+            }
+          },
+        },
         { text: "Priority", value: "priority" },
         { text: "Actions", value: "actions", sortable: false },
       ],
@@ -162,6 +177,10 @@ export default {
     },
   },
   computed: {
+    currentTime() {
+      const time = new Date();
+      return time.getHours() + ":" + time.getMinutes();
+    },
     formTitle() {
       if (this.editedIndex === -1) {
         return "New task";
