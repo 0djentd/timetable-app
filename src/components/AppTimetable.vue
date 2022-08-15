@@ -1,104 +1,118 @@
 <template>
-  <div>
-    <v-card>
-      <v-data-table
-        :dense="showDense"
-        :multi-sort="multi_sort"
-        :loading="!tasks"
-        :search="search"
-        :headers="headers"
-        :items="tasks"
-        :items-per-page="50"
-        sort-by="start"
-      >
-        <template v-slot:top>
-          <v-toolbar flat>
-            <v-toolbar-title>Timetable</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-text-field
-              v-model="search"
-              append-icon="mdi-magnify"
-              label="Search tasks"
-            ></v-text-field>
-            <v-spacer></v-spacer>
-            <v-dialog v-model="dialog" max-width="700px">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn class="mx-2" v-bind="attrs" v-on="on"> New Task </v-btn>
-              </template>
-              <v-card class="pb-2">
-                <v-card-title>
-                  {{ formTitle }}
-                </v-card-title>
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          v-model="editedItem.title"
-                          label="Title"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-slider
-                          v-model="editedItem.priority"
-                          label="Priority"
-                          thumb-label
-                          min="0"
-                          max="10"
-                        ></v-slider>
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-textarea
-                        v-model="editedItem.description"
-                        label="Description"
-                      >
-                      </v-textarea>
-                      <v-time-picker
-                        full-width
-                        v-model="editedItem.start"
-                      ></v-time-picker>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn text @click="close"> Cancel </v-btn>
-                  <v-btn text @click="save"> Save </v-btn>
-                  <v-spacer></v-spacer>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-            <v-dialog v-model="dialogDelete" max-width="700px">
-              <v-card class="pb-2">
-                <v-card-title>Remove task</v-card-title>
-                <v-card-text>
-                  Are you sure you want to remove task "{{ editedItem.title }}"?
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn text @click="closeDelete">Cancel</v-btn>
-                  <v-btn text @click="deleteItemConfirm">OK</v-btn>
-                  <v-spacer></v-spacer>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </v-toolbar>
-        </template>
-        <!-- eslint-disable-next-line -->
-        <template v-slot:item.actions="{ item }">
-          <v-icon small class="mr-2" @click="editItem(item)">
-            mdi-pencil
-          </v-icon>
-          <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
-        </template>
-      </v-data-table>
-      <v-switch v-model="multi_sort" label="multi-sort"> </v-switch>
-      <v-switch v-model="dense" label="dense"> </v-switch>
-      <v-switch v-model="auto_dense" label="auto-dense"> </v-switch>
-      <v-btn @click="saveToLocalStorage()">Save</v-btn>
-    </v-card>
-  </div>
+  <v-row>
+    <v-col cols="12" sm="2">
+      <v-sheet rounded="lg" min-height="268"> </v-sheet>
+    </v-col>
+    <v-col cols="12" sm="8">
+      <v-sheet rounded="lg" elevation="1" style="padding: 20px">
+        <v-data-table
+          :dense="showDense"
+          :multi-sort="multi_sort"
+          :loading="!tasks"
+          :search="search"
+          :headers="headers"
+          :items="tasks"
+          :items-per-page="50"
+          sort-by="start"
+        >
+          <template v-slot:top>
+            <v-toolbar flat>
+              <v-card-title class="text-h6">Timetable</v-card-title>
+              <v-spacer></v-spacer>
+              <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="Search tasks"
+              ></v-text-field>
+              <v-spacer></v-spacer>
+              <v-dialog v-model="dialog" max-width="700px">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn class="mx-2" v-bind="attrs" v-on="on">
+                    New Task
+                  </v-btn>
+                </template>
+                <v-card class="pb-2">
+                  <v-card-title>
+                    {{ formTitle }}
+                  </v-card-title>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field
+                            v-model="editedItem.title"
+                            label="Title"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-slider
+                            v-model="editedItem.priority"
+                            label="Priority"
+                            thumb-label
+                            min="0"
+                            max="10"
+                          ></v-slider>
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-textarea
+                          v-model="editedItem.description"
+                          label="Description"
+                        >
+                        </v-textarea>
+                        <v-time-picker
+                          full-width
+                          v-model="editedItem.start"
+                        ></v-time-picker>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text @click="close"> Cancel </v-btn>
+                    <v-btn text @click="save"> Save </v-btn>
+                    <v-spacer></v-spacer>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+              <v-dialog v-model="dialogDelete" max-width="700px">
+                <v-card class="pb-2">
+                  <v-card-title>Remove task</v-card-title>
+                  <v-card-text>
+                    Are you sure you want to remove task "{{
+                      editedItem.title
+                    }}"?
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text @click="closeDelete">Cancel</v-btn>
+                    <v-btn text @click="deleteItemConfirm">OK</v-btn>
+                    <v-spacer></v-spacer>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-toolbar>
+          </template>
+          <!-- eslint-disable-next-line -->
+          <template v-slot:item.actions="{ item }">
+            <v-icon small class="mr-2" @click="editItem(item)">
+              mdi-pencil
+            </v-icon>
+            <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+          </template>
+        </v-data-table>
+      </v-sheet>
+    </v-col>
+
+    <v-col cols="12" sm="2">
+      <v-sheet rounded="lg" class="px-4 py-2">
+        <v-card-title class="text-h6">Settings</v-card-title>
+        <v-switch v-model="multi_sort" label="multi-sort"> </v-switch>
+        <v-switch v-model="dense" label="dense"> </v-switch>
+        <v-switch v-model="auto_dense" label="auto-dense"> </v-switch>
+      </v-sheet>
+    </v-col>
+  </v-row>
 </template>
 <script>
 export default {

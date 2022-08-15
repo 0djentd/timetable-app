@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <AppTimetable />
-  </div>
+  <AppTimetable />
 </template>
 
 <script>
