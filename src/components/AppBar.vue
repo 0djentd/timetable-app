@@ -5,7 +5,6 @@
       <v-tab href="https://github.com/0djentd/timetable-app">
         Repository
       </v-tab>
-      <v-tab to="/about/"> About </v-tab>
     </v-tabs>
   </v-app-bar>
 </template>
