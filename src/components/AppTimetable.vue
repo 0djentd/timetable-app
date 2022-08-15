@@ -113,10 +113,23 @@
     <v-col cols="12" sm="2">
       <v-sheet rounded="lg" class="px-4 py-2">
         <v-card-title class="text-h6">Settings</v-card-title>
-        <v-switch v-model="multi_sort" label="multi-sort"> </v-switch>
-        <v-switch v-model="dense" label="dense"> </v-switch>
-        <v-switch v-model="auto_dense" label="auto-dense"> </v-switch>
-        <v-switch v-model="filter_time" label="filter-time"> </v-switch>
+        <v-switch dense v-model="multi_sort" label="Multi-sort"> </v-switch>
+        <v-switch dense v-model="dense" label="Dense"> </v-switch>
+        <v-switch
+          dense
+          :disabled="!dense"
+          v-model="auto_dense"
+          label="Auto-dense"
+        >
+        </v-switch>
+        <v-slider
+          v-model="auto_dense_limit"
+          :disabled="!auto_dense || !dense"
+          thumb-label
+          dense
+          max="50"
+        ></v-slider>
+        <v-switch dense v-model="filter_time" label="Filter-time"> </v-switch>
       </v-sheet>
     </v-col>
   </v-row>
@@ -129,6 +142,7 @@ export default {
       multi_sort: true,
       dense: true,
       auto_dense: true,
+      auto_dense_limit: 5,
       filter_time: false,
       headers: [
         { text: "Title", value: "title" },
@@ -189,8 +203,8 @@ export default {
       }
     },
     showDense() {
-      if (this.auto_dense) {
-        if (this.tasks.length > 5) {
+      if (this.auto_dense && this.dense) {
+        if (this.tasks.length >= this.auto_dense_limit) {
           return true;
         } else {
           return false;
