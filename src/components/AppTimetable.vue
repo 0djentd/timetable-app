@@ -130,6 +130,23 @@
           max="50"
         ></v-slider>
         <v-switch dense v-model="filter_time" label="Filter-time"> </v-switch>
+        <v-switch
+          dense
+          v-model="showDisplaySettings"
+          label="Show additional settings"
+        >
+        </v-switch>
+        <div v-if="showDisplaySettings">
+          <v-switch dense v-model="showTitle" label="Show title"> </v-switch>
+          <v-switch dense v-model="showDescription" label="Show description">
+          </v-switch>
+          <v-switch dense v-model="showStart" label="Show start time">
+          </v-switch>
+          <v-switch dense v-model="showPriority" label="Show priority">
+          </v-switch>
+          <v-switch dense v-model="showActions" label="Show actions">
+          </v-switch>
+        </div>
       </v-sheet>
     </v-col>
   </v-row>
@@ -144,26 +161,12 @@ export default {
       auto_dense: true,
       auto_dense_limit: 5,
       filter_time: false,
-      headers: [
-        { text: "Title", value: "title" },
-        { text: "Description", value: "description" },
-        {
-          text: "Start",
-          value: "start",
-          filter: (val) => {
-            if (!this.filter_time) {
-              return true;
-            }
-            if (val >= this.currentTime) {
-              return true;
-            } else {
-              return false;
-            }
-          },
-        },
-        { text: "Priority", value: "priority" },
-        { text: "Actions", value: "actions", sortable: false },
-      ],
+      showDisplaySettings: false,
+      showTitle: true,
+      showDescription: true,
+      showStart: true,
+      showPriority: true,
+      showActions: true,
       tasks: [],
       editedIndex: -1,
       editedItem: {
@@ -191,6 +194,43 @@ export default {
     },
   },
   computed: {
+    headers() {
+      const title = { text: "Title", value: "title" };
+      const description = { text: "Description", value: "description" };
+      const start = {
+        text: "Start",
+        value: "start",
+        filter: (val) => {
+          if (!this.filter_time) {
+            return true;
+          }
+          if (val >= this.currentTime) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+      };
+      const priority = { text: "Priority", value: "priority" };
+      const actions = { text: "Actions", value: "actions", sortable: false };
+      let result = [];
+      if (this.showTitle) {
+        result.push(title);
+      }
+      if (this.showDescription) {
+        result.push(description);
+      }
+      if (this.showStart) {
+        result.push(start);
+      }
+      if (this.showPriority) {
+        result.push(priority);
+      }
+      if (this.showActions) {
+        result.push(actions);
+      }
+      return result;
+    },
     currentTime() {
       const time = new Date();
       return time.getHours() + ":" + time.getMinutes();
