@@ -1,7 +1,13 @@
 <template>
   <v-row>
     <v-col cols="12" sm="2">
-      <v-sheet rounded="lg" min-height="268"> </v-sheet>
+      <v-sheet rounded="lg">
+        <v-card-title> How to use? </v-card-title>
+        <v-card-text
+          >First, click "New task" to add a new task. You can then sort, edit or
+          remove tasks.</v-card-text
+        >
+      </v-sheet>
     </v-col>
     <v-col cols="12" sm="8">
       <v-sheet rounded="lg" elevation="1" style="padding: 20px">
