@@ -55,10 +55,13 @@
                           ></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6" md="4">
+                          <b-form-timepicker v-model="editedItem.start">
+                          </b-form-timepicker>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
                           <v-slider
                             v-model="editedItem.priority"
                             label="Priority"
-                            thumb-label
                             min="0"
                             max="10"
                           ></v-slider>
@@ -68,12 +71,11 @@
                         <v-textarea
                           v-model="editedItem.description"
                           label="Description"
+                          auto-grow
+                          dense
+                          clearable
                         >
                         </v-textarea>
-                        <v-time-picker
-                          full-width
-                          v-model="editedItem.start"
-                        ></v-time-picker>
                       </v-row>
                     </v-container>
                   </v-card-text>
