@@ -160,7 +160,11 @@
   </v-row>
 </template>
 <script>
+import { BFormTimepicker } from "bootstrap-vue";
 export default {
+  components: {
+    BFormTimepicker,
+  },
   data() {
     return {
       showDisplaySettings: false,
@@ -230,7 +234,7 @@ export default {
       };
       const priority = { text: "Priority", value: "priority" };
       const actions = { text: "Actions", value: "actions", sortable: false };
-      let result = [];
+      const result = [];
       if (this.showTitle) {
         result.push(title);
       }
@@ -274,8 +278,12 @@ export default {
   methods: {
     loadFromLocalStorage() {
       const localStorageStr = "timetable-app-tasks";
-      const tasksJson = localStorage.getItem(localStorageStr, '{"tasks": []}');
-      const tasks = JSON.parse(tasksJson).tasks;
+      const tasksJson = localStorage.getItem(localStorageStr);
+      let tasks = []
+      if (tasksJson) {
+        const tasksObj = JSON.parse(tasksJson);
+        tasks = tasksObj.tasks;
+      }
       if (tasks) {
         this.tasks = tasks;
       } else {
