@@ -62,6 +62,7 @@
                           <v-slider
                             v-model="editedItem.priority"
                             label="Priority"
+                            thumb-label
                             min="0"
                             max="10"
                           ></v-slider>
