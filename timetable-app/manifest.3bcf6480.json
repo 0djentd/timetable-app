@@ -1,0 +1,9 @@
+{
+  "name": "timetable-app",
+  "short_name": "timetable-app",
+  "icons": [],
+  "start_url": "/timetable-app/?standalone=true",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "lang": "en"
+}
