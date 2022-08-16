@@ -118,18 +118,18 @@
         <v-switch
           dense
           :disabled="!dense"
-          v-model="auto_dense"
+          v-model="autoDense"
           label="Auto-dense"
         >
         </v-switch>
         <v-slider
-          v-model="auto_dense_limit"
-          :disabled="!auto_dense || !dense"
+          v-model="autoDenseLimit"
+          :disabled="!autoDense || !dense"
           thumb-label
           dense
           max="50"
         ></v-slider>
-        <v-switch dense v-model="filter_time" label="Filter-time"> </v-switch>
+        <v-switch dense v-model="filterTime" label="Filter-time"> </v-switch>
         <v-switch
           dense
           v-model="showDisplaySettings"
@@ -158,9 +158,9 @@ export default {
       search: "",
       multi_sort: true,
       dense: true,
-      auto_dense: true,
-      auto_dense_limit: 5,
-      filter_time: false,
+      autoDense: true,
+      autoDenseLimit: 5,
+      filterTime: false,
       showDisplaySettings: false,
       showTitle: true,
       showDescription: true,
@@ -201,7 +201,7 @@ export default {
         text: "Start",
         value: "start",
         filter: (val) => {
-          if (!this.filter_time) {
+          if (!this.filterTime) {
             return true;
           }
           if (val >= this.currentTime) {
@@ -243,8 +243,8 @@ export default {
       }
     },
     showDense() {
-      if (this.auto_dense && this.dense) {
-        if (this.tasks.length >= this.auto_dense_limit) {
+      if (this.autoDense && this.dense) {
+        if (this.tasks.length >= this.autoDenseLimit) {
           return true;
         } else {
           return false;
