@@ -11,7 +11,11 @@
     </v-col>
     <v-col cols="12" sm="8">
       <v-sheet rounded="lg" elevation="1" style="padding: 20px">
+        <div v-if="showJson">
+          <v-textarea dense auto-grow v-model="jsonTasks"></v-textarea>
+        </div>
         <v-data-table
+          v-if="!showJson"
           :dense="showDense"
           :multi-sort="multi_sort"
           :loading="!tasks"
@@ -147,6 +151,7 @@
           <v-switch dense v-model="showActions" label="Show actions">
           </v-switch>
         </div>
+        <v-switch dense v-model="showJson" label="Show JSON"> </v-switch>
       </v-sheet>
     </v-col>
   </v-row>
@@ -155,13 +160,14 @@
 export default {
   data() {
     return {
+      showDisplaySettings: false,
+      showJson: false,
       search: "",
       multi_sort: true,
       dense: true,
       autoDense: true,
       autoDenseLimit: 5,
       filterTime: false,
-      showDisplaySettings: false,
       showTitle: true,
       showDescription: true,
       showStart: true,
@@ -194,6 +200,14 @@ export default {
     },
   },
   computed: {
+    jsonTasks: {
+      get() {
+        return JSON.stringify(this.tasks, null, 4);
+      },
+      set(val) {
+        this.tasks = JSON.parse(val);
+      },
+    },
     headers() {
       const title = { text: "Title", value: "title" };
       const description = { text: "Description", value: "description" };
@@ -270,7 +284,6 @@ export default {
       const tasksJson = JSON.stringify({ tasks: this.tasks });
       localStorage.setItem(localStorageStr, tasksJson);
     },
-
     editItem(item) {
       this.editedIndex = this.tasks.indexOf(item);
       this.editedItem = Object.assign({}, item);
