@@ -17,7 +17,7 @@
         <v-data-table
           v-if="!showJson"
           :dense="showDense"
-          :multi-sort="multi_sort"
+          :multi-sort="multiSort"
           :loading="!tasks"
           :search="search"
           :headers="headers"
@@ -117,7 +117,7 @@
     <v-col cols="12" sm="2">
       <v-sheet rounded="lg" class="px-4 py-2">
         <v-card-title class="text-h6">Settings</v-card-title>
-        <v-switch dense v-model="multi_sort" label="Multi-sort"> </v-switch>
+        <v-switch dense v-model="multiSort" label="Multi-sort"> </v-switch>
         <v-switch dense v-model="dense" label="Dense"> </v-switch>
         <v-switch
           dense
@@ -163,7 +163,7 @@ export default {
       showDisplaySettings: false,
       showJson: false,
       search: "",
-      multi_sort: true,
+      multiSort: true,
       dense: true,
       autoDense: true,
       autoDenseLimit: 5,
